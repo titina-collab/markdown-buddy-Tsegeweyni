@@ -1,0 +1,13 @@
+date,product,region,units_sold,unit_price
+2026-01-05,Laptop,East,5,900
+2026-01-08,Tablet,West,8,450
+2026-01-12,Monitor,North,10,280
+2026-01-15,Laptop,South,4,900
+2026-01-20,Tablet,East,7,450
+2026-01-25,Monitor,West,12,280
+2026-02-02,Laptop,North,6,900
+2026-02-07,Tablet,South,9,450
+2026-02-14,Monitor,East,11,280
+2026-02-20,Laptop,West,3,900
+2026-02-25,Tablet,North,10,450
+2026-03-01,Monitor,South,8,280
