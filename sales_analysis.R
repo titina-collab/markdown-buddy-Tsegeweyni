@@ -1,3 +1,8 @@
+# AI Assistance Declaration: I used ChatGPT to help organize the R script,
+# suggest comments, and improve code readability. I verified the code by
+# running it in Posit Cloud and checking the dataset, summaries, and chart.
+# All final calculations were completed and verified by me. I am responsible
+# for the accuracy and originality of this work.
 # BDA400 Assignment 1
 # Synthetic Sales Data Analysis
 # This script imports synthetic sales data, calculates revenue,
