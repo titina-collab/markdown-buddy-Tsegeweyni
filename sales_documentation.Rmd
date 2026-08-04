@@ -1,0 +1,162 @@
+---
+title: "Synthetic Sales Data Analysis Documentation"
+author: "Tsegeweyni"
+date: "2026-08-04"
+output: html_document
+---
+
+> **AI Assistance Declaration:** I used ChatGPT to help organize the R Markdown structure, suggest headings, and improve code chunk formatting. Prompts used are documented in the Appendix. I verified the output by running each code section in Posit Cloud and checking the dataset, summaries, and chart. All final decisions and edits were completed by me. I am responsible for the accuracy and originality of this work.
+
+# Purpose
+
+This R Markdown document explains the `sales_analysis.R` script. The script analyzes a synthetic sales dataset, calculates revenue, summarizes sales performance by product and region, identifies the highest-performing product, and creates a bar chart.
+
+# Inputs
+
+The analysis uses the following input file:
+
+- `data/synthetic_sales.csv`
+
+The dataset contains these variables:
+
+- `date`
+- `product`
+- `region`
+- `units_sold`
+- `unit_price`
+
+# Required Packages
+
+The project uses the following R packages:
+
+- `readr`
+- `dplyr`
+- `ggplot2`
+
+```{r setup, message=FALSE, warning=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+# Import the Dataset
+
+The following code imports the synthetic sales data.
+
+```{r import-data}
+sales_data <- read_csv("data/synthetic_sales.csv")
+```
+
+# Preview the Dataset
+
+The first six rows are displayed to confirm that the data imported correctly.
+
+```{r preview-data}
+head(sales_data)
+```
+
+# Inspect the Data Structure
+
+The `str()` function shows the number of observations, variables, and data types.
+
+```{r inspect-data}
+str(sales_data)
+```
+
+# Calculate Revenue
+
+Revenue is calculated by multiplying `units_sold` by `unit_price`.
+
+```{r calculate-revenue}
+sales_data <- sales_data %>%
+  mutate(revenue = units_sold * unit_price)
+
+head(sales_data)
+```
+
+# Revenue by Product
+
+The following code groups the data by product and calculates total revenue.
+
+```{r product-summary}
+product_summary <- sales_data %>%
+  group_by(product) %>%
+  summarise(
+    total_revenue = sum(revenue),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(total_revenue))
+
+product_summary
+```
+
+# Revenue by Region
+
+The following code groups the data by region and calculates total revenue.
+
+```{r region-summary}
+region_summary <- sales_data %>%
+  group_by(region) %>%
+  summarise(
+    total_revenue = sum(revenue),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(total_revenue))
+
+region_summary
+```
+
+# Highest-Performing Product
+
+The highest-performing product is selected based on total revenue.
+
+```{r highest-product}
+highest_product <- product_summary %>%
+  slice_max(
+    order_by = total_revenue,
+    n = 1,
+    with_ties = FALSE
+  )
+
+highest_product
+```
+
+# Sales Visualization
+
+The following bar chart compares total revenue by product.
+
+```{r sales-chart}
+ggplot(
+  product_summary,
+  aes(x = reorder(product, total_revenue), y = total_revenue)
+) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Total Revenue by Product",
+    x = "Product",
+    y = "Total Revenue"
+  ) +
+  theme_minimal()
+```
+
+# Outputs
+
+The analysis produces:
+
+- A sales dataset with a calculated `revenue` variable
+- Total revenue by product
+- Total revenue by region
+- The highest-performing product
+- A bar chart of product revenue
+
+# Verification
+
+I ran each code chunk in Posit Cloud and confirmed that:
+
+- The CSV file imported successfully.
+- The dataset contained 12 observations and 5 original variables.
+- The revenue column was calculated correctly.
+- Product and region summaries were created.
+- Laptop was identified as the highest-performing product.
+- The bar chart rendered correctly.
